@@ -17,7 +17,7 @@ export const Show: NextPage = ({ show }: any) => {
 
   useEffect(() => {
     console.log(summary.current.clientHeight);
-    if(summary.current.clientHeight > 400){
+    if(summary.current.clientHeight > 256){
       setIsLargeSummary(true);
     }
   }, []);
