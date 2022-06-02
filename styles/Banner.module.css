@@ -1,0 +1,14 @@
+
+.banner {
+    position: relative;
+}
+
+.banner_bgImage {
+    z-index: -1;
+}
+
+.banner_inner {
+    padding: 15px;
+    color: white;
+    padding: 80px 0;
+}

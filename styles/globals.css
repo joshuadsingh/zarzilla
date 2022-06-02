@@ -1,9 +1,24 @@
+:root {
+  --container-width: 85%;
+  --max-container-width: 1600px;
+  --body-font: 'Lato', sans-serif;
+  --header-font: 'Plus Jakarta Sans', sans-serif;
+  --theme-color: #e74c3c;
+  --font-color: #333;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--body-font);
+  color: var(--font-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--header-font);
 }
 
 a {
@@ -13,4 +28,35 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.container {
+  width: var(--container-width);
+  max-width: var(--max-container-width);
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.accent_underline {
+  position: relative;
+}
+
+.accent_underline::before {
+  content: '';
+  background: var(--theme-color);
+  height: 8px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.footer {
+  padding: 30px;
+  background: var(--theme-color);
 }
