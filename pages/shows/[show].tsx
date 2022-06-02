@@ -13,11 +13,11 @@ export const Show: NextPage = ({ show }: any) => {
   const showRating = show.rating.average && Math.floor(show.rating.average / 2);
   const actorList = show._embedded.cast.slice(0, 5);
 
+  const summaryMaxHeight = 256;
   const summary = useRef() as MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
-    console.log(summary.current.clientHeight);
-    if(summary.current.clientHeight > 256){
+    if(summary.current.clientHeight > summaryMaxHeight){
       setIsLargeSummary(true);
     }
   }, []);
