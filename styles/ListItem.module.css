@@ -19,6 +19,7 @@
     color: var(--theme-color);
     text-transform: uppercase;
     font-size: 0.9em;
+    margin-right: 15px;
 }
 
 .label__text.text__has__image {
