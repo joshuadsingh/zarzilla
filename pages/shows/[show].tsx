@@ -1,19 +1,30 @@
 import { useRouter } from 'next/router'
 import type { GetStaticPaths, NextPage } from 'next'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import styles from '../../styles/Show.module.css'
 import Banner from '../../components/banner'
 import ListItem from '../../components/list-item'
 import Image from 'next/image'
 
 export const Show: NextPage = ({ show }: any) => {
+  const [isLargeSummary, setIsLargeSummary] = useState(false);
+
   const showRating = show.rating.average && Math.floor(show.rating.average / 2);
   const actorList = show._embedded.cast.slice(0, 5);
 
+  const summary = useRef() as MutableRefObject<HTMLDivElement>;
+
+  useEffect(() => {
+    console.log(summary.current.clientHeight);
+    if(summary.current.clientHeight > 400){
+      setIsLargeSummary(true);
+    }
+  }, []);
+
   return (
     <>
-      <Banner className={styles.banner__custom} bgImage='https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'>
+      <Banner className={isLargeSummary ? styles.banner__custom__large : styles.banner__custom} bgImage='https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'>
         <Link href="/">
           <a className={styles.back__button}>← Back to shows</a>
         </Link>
@@ -35,7 +46,7 @@ export const Show: NextPage = ({ show }: any) => {
                 <span >Show has not yet been rated.</span>
             }
             <h1 className={`accent_underline ${styles.heading__title}`}>{show.name}</h1>
-            <div className={styles.heading__summary} dangerouslySetInnerHTML={{ __html: show.summary }} />
+            <div ref={summary} className={styles.heading__summary} dangerouslySetInnerHTML={{ __html: show.summary }} />
           </div>
 
         </div>
