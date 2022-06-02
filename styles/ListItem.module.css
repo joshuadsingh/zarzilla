@@ -13,13 +13,15 @@
 .label {
     display: flex;
     align-items: center;
+    font-size: 0.9em;
 }
 
 .label__text {
     color: var(--theme-color);
     text-transform: uppercase;
-    font-size: 0.9em;
+    font-size: 0.85em;
     margin-right: 15px;
+    letter-spacing: 0.5px;
 }
 
 .label__text.text__has__image {
@@ -27,9 +29,12 @@
     display: inline-block;
     color: var(--font-color);
     text-transform: capitalize;
+    font-size: 1em;
+    letter-spacing: 0;
 }
 
 .parameter {
     margin: 30px 0;
     color: rgba(0, 0, 0, 0.5);
+    font-size: 0.9em;
 }
