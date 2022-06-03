@@ -6,7 +6,6 @@ export const formatSlug = (title: string) => title
 export const isServer: boolean = typeof window === 'undefined';
 
 export const truncateByWords = (text: string, wordCount: number) => {
-    console.log(text)
     const removeHTML = text.replace(/<[^>]*>/g, '');
     const splitByWord = removeHTML.split(' ');
 
