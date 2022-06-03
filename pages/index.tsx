@@ -1,10 +1,8 @@
 import type { NextPage, GetStaticProps } from 'next'
 import Link from 'next/link'
-import { imageOptimizer } from 'next/dist/server/image-optimizer'
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { formatSlug, isServer, truncateByWords } from '../utils/helpers'
+import { truncateByWords } from '../utils/helpers'
 import Banner from '../components/banner'
 
 const Home: NextPage = ({shows}: any) => {

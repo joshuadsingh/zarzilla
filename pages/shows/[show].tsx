@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import type { GetStaticPaths, NextPage } from 'next'
 import Link from 'next/link'
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
