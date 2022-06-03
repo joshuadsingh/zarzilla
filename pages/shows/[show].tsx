@@ -16,7 +16,7 @@ export const Show: NextPage = ({ show }: any) => {
   const summaryMaxHeight = 256;
   const summary = useRef() as MutableRefObject<HTMLDivElement>;
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if(summary.current.clientHeight > summaryMaxHeight){
