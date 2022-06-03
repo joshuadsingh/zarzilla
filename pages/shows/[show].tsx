@@ -8,6 +8,7 @@ import ListItem from '../../components/list-item'
 import Image from 'next/image'
 
 export const Show: NextPage = ({ show }: any) => {
+  const fallbackImage = 'https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
   const [isLargeSummary, setIsLargeSummary] = useState(false);
 
   const showRating = show.rating.average && Math.floor(show.rating.average / 2);
@@ -30,7 +31,7 @@ export const Show: NextPage = ({ show }: any) => {
         </Link>
         <div className={styles.heading}>
           <div className={styles.heading__image_container}>
-            <Image layout='fill' objectFit='cover' src={show.image.medium} alt={`Summary for ${show.name}`} />
+            <Image priority layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
           </div>
           <div className={styles.heading__show}>
             {
@@ -46,7 +47,7 @@ export const Show: NextPage = ({ show }: any) => {
                 <span >Show has not yet been rated.</span>
             }
             <h1 className={`accent_underline ${styles.heading__title}`}>{show.name}</h1>
-            <div ref={summary} className={styles.heading__summary} dangerouslySetInnerHTML={{ __html: show.summary }} />
+            <div ref={summary} className={styles.heading__summary} dangerouslySetInnerHTML={{ __html: show.summary || `No summary available.` }} />
           </div>
 
         </div>
