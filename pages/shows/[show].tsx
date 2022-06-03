@@ -1,10 +1,10 @@
 import type { GetStaticPaths, NextPage } from 'next'
-import Link from 'next/link'
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import styles from '../../styles/Show.module.css'
 import Banner from '../../components/banner'
 import ListItem from '../../components/list-item'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export const Show: NextPage = ({ show }: any) => {
   const fallbackImage = 'https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
@@ -16,6 +16,8 @@ export const Show: NextPage = ({ show }: any) => {
   const summaryMaxHeight = 256;
   const summary = useRef() as MutableRefObject<HTMLDivElement>;
 
+  const router = useRouter()
+
   useEffect(() => {
     if(summary.current.clientHeight > summaryMaxHeight){
       setIsLargeSummary(true);
@@ -25,9 +27,7 @@ export const Show: NextPage = ({ show }: any) => {
   return (
     <>
       <Banner className={isLargeSummary ? styles.banner__custom__large : styles.banner__custom} bgImage='https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'>
-        <Link href="/">
-          <a className={styles.back__button}>← Back to shows</a>
-        </Link>
+        <span onClick={() => router.back()} className={styles.back__button}>← Back</span>
         <div className={styles.heading}>
           <div className={styles.heading__image_container}>
             <Image priority layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
@@ -92,8 +92,8 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async (test) => 
   }
 }
 
-export async function getStaticProps({ params }: any) {
-  const req = await fetch(`https://api.tvmaze.com/shows/${params.show}?embed=cast`);
+export async function getStaticProps(context: any) {
+  const req = await fetch(`https://api.tvmaze.com/shows/${context.params.show}?embed=cast`);
   const show = await req.json();
 
   return {

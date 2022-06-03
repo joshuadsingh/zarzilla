@@ -1,5 +1,6 @@
 :root {
   --container-width: 85%;
+  --container-width-mobile: 94%;
   --max-container-width: 1600px;
   --body-font: 'Lato', sans-serif;
   --header-font: 'Plus Jakarta Sans', sans-serif;
@@ -31,9 +32,10 @@ a {
 }
 
 .container {
-  width: var(--container-width);
+  width: var(--container-width-mobile);
   max-width: var(--max-container-width);
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 .grid {
@@ -60,3 +62,60 @@ a {
   padding: 30px;
   background: var(--theme-color);
 }
+
+.page-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-info a {
+  color: var(--theme-color);
+  text-decoration: underline;
+  font-size: 0.9em;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.page-btn {
+  position: fixed;
+  background: var(--theme-color);
+  color: white;
+  border-radius: 50%;
+  padding: 18px;
+  z-index: 10;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  opacity: 0.6;
+}
+
+.page-btn:hover {
+  opacity: 1;
+}
+
+.btn-next {
+  bottom: 10px;
+  right: 10px;
+}
+
+.btn-previous {
+  bottom: 10px;
+  left: 10px;
+}
+
+@media (min-width: 768px) {
+  .btn-next {
+    bottom: 100px;
+    right: 90px;
+  }
+  
+  .btn-previous {
+    bottom: 100px;
+    left: 90px;
+  }
+
+  .container {
+    width: var(--container-width);
+  }
+}
+
