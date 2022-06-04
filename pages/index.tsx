@@ -2,7 +2,7 @@ import type { NextPage, GetStaticProps } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { truncateByWords } from '../utils/helpers'
+import { truncateByWords, rgbDataURL } from '../utils/helpers'
 import Banner from '../components/banner'
 
 const Home: NextPage = ({ shows }: any) => {
@@ -26,7 +26,7 @@ const Home: NextPage = ({ shows }: any) => {
                 <div key={index} className={styles.show}>
                   <Link href={`/shows/${show.id}`}>
                     <div className={styles.show__image_container}>
-                      <Image layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
+                      <Image placeholder="blur" blurDataURL={rgbDataURL(231, 76, 60)} layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
                     </div>
                   </Link>
                   <Link href={`/shows/${show.id}`}>

@@ -45,7 +45,7 @@ export const Show: NextPage = ({ show }: any) => {
                 :
                 <span >Show has not yet been rated.</span>
             }
-            <h1 className={`accent_underline ${styles.heading__title}`}>{show.name}</h1>
+            <h1 className={`${styles.heading__title}`}>{show.name}</h1>
             <div ref={summary} className={styles.heading__summary} dangerouslySetInnerHTML={{ __html: show.summary || `No summary available.` }} />
           </div>
 

@@ -35,7 +35,9 @@
 .heading__title {
     margin-top: 10px;
     font-size: 2em;
-    width: fit-content;
+    text-decoration-line: underline;
+    text-decoration-color: var(--theme-color);
+    text-decoration-thickness: 5px;
 }
 
 .heading__summary {
