@@ -18,18 +18,18 @@ const Home: NextPage = ({ shows }: any) => {
         <div className="container">
           <div className="page-info">
             <h2>SCHEDULE</h2>
-            <Link href='shows'>All Shows →</Link>
+            <Link href='/shows'>All Shows →</Link>
           </div>
           <div className={`grid ${styles.shows}`}>
             {shows && shows.map(({ show }: any, index: number) => {
               return (
                 <div key={index} className={styles.show}>
-                  <Link href={`shows/${show.id}`}>
+                  <Link href={`/shows/${show.id}`}>
                     <div className={styles.show__image_container}>
                       <Image layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
                     </div>
                   </Link>
-                  <Link href={`shows/${show.id}`}>
+                  <Link href={`/shows/${show.id}`}>
                     <h2 className={`${styles.show__title} accent_underline}`}>{show.name}</h2>
                   </Link>
                   <p className={styles.show__summary}>{truncateByWords(show.summary || 'No summary available.', 40)}</p>

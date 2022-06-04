@@ -26,7 +26,7 @@ const Shows: NextPage<Props> = ({ shows, pageNumber }) => {
                     </div>
                     {
                         pageNumber > 1 &&
-                        <Link href={`shows?page=${pageNumber - 1}`}>
+                        <Link href={`/shows?page=${pageNumber - 1}`}>
                             <div className="page-btn btn-previous">
                                 <span>←</span>
                             </div>
@@ -34,7 +34,7 @@ const Shows: NextPage<Props> = ({ shows, pageNumber }) => {
                     }
                     {
                         shows.length > 0 &&
-                        <Link href={`shows?page=${pageNumber + 1}`}>
+                        <Link href={`/shows?page=${pageNumber + 1}`}>
                             <div className="page-btn btn-next">
                                 <span>→</span>
                             </div>
@@ -45,12 +45,12 @@ const Shows: NextPage<Props> = ({ shows, pageNumber }) => {
                             shows.map((show: any, index: number) => {
                                 return (
                                     <div key={index} className={styles.show}>
-                                        <Link href={`shows/${show.id}`}>
+                                        <Link href={`/shows/${show.id}`}>
                                             <div className={styles.show__image_container}>
                                                 <Image layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
                                             </div>
                                         </Link>
-                                        <Link href={`shows/${show.id}`}>
+                                        <Link href={`/shows/${show.id}`}>
                                             <h2 className={`${styles.show__title} accent_underline}`}>{show.name}</h2>
                                         </Link>
                                         <p className={styles.show__summary}>{truncateByWords(show.summary || 'No summary available.', 40)}</p>
