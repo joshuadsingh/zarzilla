@@ -1,36 +1,51 @@
-import type { GetStaticPaths, NextPage } from 'next'
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
-import styles from '../../styles/Show.module.css'
-import Banner from '../../components/banner'
-import ListItem from '../../components/list-item'
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Banner from '../../components/banner'
+import ListItem from '../../components/list-item'
+import { Constants } from '../../utils/constants';
+import styles from '../../styles/Show.module.css'
 
-export const Show: NextPage = ({ show }: any) => {
-  const fallbackImage = 'https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+interface ShowProps {
+  show: any;
+  errors?: string;
+}
+
+export const Show: NextPage<ShowProps> = ({ show, errors }) => {
   const [isLargeSummary, setIsLargeSummary] = useState(false);
-
-  const showRating = show.rating.average && Math.floor(show.rating.average / 2);
-  const actorList = show._embedded.cast.slice(0, 5);
-
-  const summaryMaxHeight = 256;
   const summary = useRef() as MutableRefObject<HTMLDivElement>;
 
   const router = useRouter();
 
   useEffect(() => {
-    if(summary.current.clientHeight > summaryMaxHeight){
+    if (summary.current?.clientHeight > summaryMaxHeight) {
       setIsLargeSummary(true);
     }
   }, []);
 
+  if (errors) {
+    return (
+      <>
+        <Link href='/'>← Back to homepage</Link>
+        <h4>{errors}</h4>
+      </>
+    )
+  }
+
+  const summaryMaxHeight = 256;
+
+  const showRating = show.rating.average && Math.floor(show.rating.average / 2);
+  const actorList = show._embedded.cast.slice(0, 5);
+
   return (
     <>
-      <Banner className={isLargeSummary ? styles.banner__custom__large : styles.banner__custom} bgImage='https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'>
+      <Banner className={isLargeSummary ? styles.banner__custom__large : styles.banner__custom} bgImage={Constants.BACKGROUND_IMAGE_SHOW}>
         <span onClick={() => router.back()} className={styles.back__button}>← Back</span>
         <div className={styles.heading}>
           <div className={styles.heading__image_container}>
-            <Image priority layout='fill' objectFit='cover' src={show.image?.medium || fallbackImage} alt={`Summary for ${show.name}`} />
+            <Image priority layout='fill' objectFit='cover' src={show.image?.medium || Constants.FALLBACK_IMAGE} alt={`Summary for ${show.name}`} />
           </div>
           <div className={styles.heading__show}>
             {
@@ -68,14 +83,13 @@ export const Show: NextPage = ({ show }: any) => {
             </div>
             <div className={styles.starring}>
               <h2>Starring</h2>
-
               {
-                actorList.length > 0 ? 
-                actorList.map((actor: any, index: number) => {
-                  return <ListItem key={index} hasImage image={actor.person.image?.medium} label={actor.person?.name} parameter={actor.character.name} />
-                })
-                :
-                <p>Cast information not available.</p>
+                actorList.length > 0 ?
+                  actorList.map((actor: any, index: number) => {
+                    return <ListItem key={index} hasImage image={actor.person.image?.medium} label={actor.person?.name} parameter={actor.character.name} />
+                  })
+                  :
+                  <p>Cast information not available.</p>
               }
             </div>
           </div>
@@ -85,21 +99,22 @@ export const Show: NextPage = ({ show }: any) => {
   )
 }
 
-export const getStaticPaths: GetStaticPaths<{ slug: string }> = async (test) => {
-  return {
-    paths: [], //indicates that no page needs be created at build time
-    fallback: 'blocking' //indicates the type of fallback
-  }
+export const getStaticPaths: GetStaticPaths = async () => {
+  return { paths: [], fallback: 'blocking' }
 }
 
-export async function getStaticProps(context: any) {
-  const req = await fetch(`https://api.tvmaze.com/shows/${context.params.show}?embed=cast`);
-  const show = await req.json();
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  try {
+    const req = await fetch(`${Constants.BASE_URL}/shows/${params?.show}?embed=cast`);
+    const show = await req.json();
 
-  return {
-    props: {
-      show
-    },
+    return {
+      props: {
+        show
+      },
+    }
+  } catch (err: any) {
+    return { props: { errors: err.message } }
   }
 }
 
